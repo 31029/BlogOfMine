@@ -7,17 +7,17 @@
 {% block content %}
 
   <ul>
-    {% for topic in topics %}
+    {% for article in articles %}
       <li>
         <h3>
-          <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+          <a href="{% url 'learning_logs:article' article.id %}">{{ article }}</a>
         </h3>
       </li>
     {% empty %}
-      <li>No topics have been added yet.</li>
+      <li>No articles have been added yet.</li>
     {% endfor %}
   </ul>
   
-  <h3><a href="{% url 'learning_logs:new_topic' %}">Add new topic</h3>
+  <h3><a href="{% url 'learning_logs:new_article' %}">Add new article</h3>
 
 {% endblock content %}

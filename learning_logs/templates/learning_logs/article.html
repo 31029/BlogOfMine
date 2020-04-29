@@ -1,0 +1,27 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block header %}
+<h2>{{ entry.text|linebreaks }}</h2>
+{% endblock header %}
+
+{% block content %}
+<p>
+  <a href="{% url 'learning_logs:new_entry' article.id %}">add new entry</a>
+</p>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <small>
+      {{ article.date_added|date:'M d, Y H:i' }}
+    </small>
+  </div>
+  <div class="panel-body">
+    {{ article }}
+  </div>
+</div> <!-- panel -->
+<!--{-% empty -%-}
+There are no entries for this article yet.
+-->
+
+{% endblock content %}

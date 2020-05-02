@@ -128,10 +128,17 @@ STATIC_URL = '/static/'
 
 # 我的设置
 LOGIN_URL = '/users/login/'
+
 # django-bootstrap3的设置
 BOOTSTRAP3 = {'include_jquery': True, }
 
+# 设置图片等静态文件的路径（电脑系统文件夹路径）
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),  
+)
+
 #HeroKu设置
+'''
 if os.getcwd() == '/app':
     import dj_database_url
     DATABASES = {
@@ -148,3 +155,4 @@ if os.getcwd() == '/app':
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )
+'''

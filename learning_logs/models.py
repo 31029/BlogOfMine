@@ -29,6 +29,7 @@ class Entry(models.Model):
 
 class Article(models.Model):
     """The core of BLOGOFMINE"""
+    topic = models.CharField(verbose_name="标题", max_length=40)
     text = models.CharField(verbose_name='文章内容', max_length=5000)
     date_added = models.DateTimeField(auto_now_add=True)
     tag = models.ManyToManyField(to=Tag, related_name='Tag_Topic')

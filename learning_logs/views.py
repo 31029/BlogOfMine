@@ -71,13 +71,12 @@ def new_entry(request, article_id):
     return render(request, 'learning_logs/new_entry.html', context)
 
 @login_required
-def edit_entry(request, entry_id):
+def edit_article_entry(request, entry_id):
     """Edit an existing entry."""
-    entry = Entry.objects.get(id=entry_id)
-    article = entry.article_set().all()
-    #if article.owner != request.user:
-    #   raise Http404
     
+    entry = Entry.objects.get(id=entry_id)
+    article = Article.objects.get(entry_id=entry_id)
+
     if request.method != 'POST':
         # Initial request; pre-fill form with the current entry.
         form = EntryForm(instance=entry)

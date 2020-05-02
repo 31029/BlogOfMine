@@ -6,9 +6,8 @@
 
 {% block content %}
 <p>
-  <a href="{% url 'learning_logs:new_entry' article.id %}">add new entry</a>
+  <a href="{% url 'learning_logs:edit_entry' article.id %}">change the entry</a>
 </p>
-
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -20,8 +19,5 @@
     {{ article }}
   </div>
 </div> <!-- panel -->
-<!--{-% empty -%-}
-There are no entries for this article yet.
--->
 
 {% endblock content %}

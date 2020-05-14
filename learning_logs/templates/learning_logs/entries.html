@@ -1,0 +1,21 @@
+{% extends "learning_logs/base.html" %}
+
+{% block header %}
+  <h3>Leon的所有分类</h3>
+{% endblock %}
+
+{% block content %}
+{% for entry in entries %}
+  <p><a href="{% url 'learning_logs:entry' entry.id %}">{{ entry }}</a></p>
+{% endfor %}
+
+{% ifequal 1 user.id %}
+  <p>Add a new entry:</p>
+  <form action="{% url 'learning_logs:entries'%}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name='submit'>add entry</button>
+  </form>
+  {% endifequal %}
+
+{% endblock content %}

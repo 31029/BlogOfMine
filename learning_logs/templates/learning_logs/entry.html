@@ -1,11 +1,10 @@
 {% extends "learning_logs/base.html" %}
 
 {% block header %}
-  <h3>Leon的所有文章</h3>
+  <h1>{{entry.text}}</h1>
 {% endblock %}
 
 {% block content %}
-
   <ul>
     {% for article in articles %}
       <li>
@@ -14,10 +13,11 @@
         </h3>
       </li>
     {% empty %}
-      <li>No articles were found</li>
+      <li>No articles have been added yet.</li>
     {% endfor %}
   </ul>
-  {% ifequal 1 user.id %}
-  <h3><a href="{% url 'learning_logs:new_article' %}">Add new article</h3>
+  {% ifequal 1 user.id%}
+  <h5><a href="{% url 'learning_logs:edit_entry' entry.id %}">修改分类</h5>
   {% endifequal %}
+
 {% endblock content %}

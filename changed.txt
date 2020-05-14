@@ -1,0 +1,33 @@
+@login_required
+def new_entry(request, article_id):
+    """Add a new entry for a particular ."""
+    article = Article.objects.get(id=article_id)
+    if article.owner != request.user:
+        raise Http404
+    
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = EntryForm()        
+    else:
+        # POST data submitted; process data.
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.article = article
+            new_entry.owner = request.user
+            new_entry.save()
+            return HttpResponseRedirect(reverse('learning_logs:article',
+                                        args=[article_id]))
+    
+    context = {'article': article, 'form': form}
+    return render(request, 'learning_logs/new_entry.html', context)
+
+
+
+<style>
+  body{
+    background: linear-gradient(#696969,#c0c0c0); 
+    /*最好设置一个背景颜色，万一渐变效果加载失败，背景也不会是空白的*/
+    background-color: #93B874; 
+  }
+</style>

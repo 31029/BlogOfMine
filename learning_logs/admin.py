@@ -6,8 +6,8 @@ from learning_logs.models import Article ,Entry, Tag
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    fields = ('text',)
-    list_display = ('text',)
+    fields = ('text','description',)
+    list_display = ('text', 'description',)
 
 
 @admin.register(Article)
@@ -18,4 +18,5 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    fields = ('text',)
+    fields = ('text', 'owner')
+    list_display = ['text', 'date_added',  'owner']

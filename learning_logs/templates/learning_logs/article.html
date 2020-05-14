@@ -1,18 +1,18 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block header %}
-<h2>{{ entry.text|linebreaks }}</h2>
+<h4>{{ article.topic}}</h4>
+
+{% if request.user.is_authenticate %}
+<a href="{% url 'learning_logs:edit_entry' entry.id%}">修改分类名</a>
+{% endif %}
 {% endblock header %}
 
 {% block content %}
-<p>
-  <a href="{% url 'learning_logs:edit_entry' article.id %}">change the entry</a>
-</p>
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <small>
-      {{ article.date_added|date:'M d, Y H:i' }}
+      分类: {{entry.text}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  发布时间：{{ article.date_added|date:'M d, Y H:i' }}
     </small>
   </div>
   <div class="panel-body">
@@ -20,4 +20,9 @@
   </div>
 </div> <!-- panel -->
 
+{% ifequal 1 user.id%}
+<div style="text-align: right;">
+<a class="btn btn-primary btn-large" href="{% url 'learning_logs:edit_article' article.id %}" > 编辑文章</a></div>
+
+{% endifequal %}
 {% endblock content %}

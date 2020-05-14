@@ -2,9 +2,9 @@
 
 {% block content %}
     
-  <p>编辑分类:</p>
+  <p>编辑文章:</p>
     
-  <form action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
+  <form action="{% url 'learning_logs:edit_article' article.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
     <button name="submit">save changes</button>

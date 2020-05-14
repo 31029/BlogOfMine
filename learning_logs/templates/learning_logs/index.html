@@ -1,109 +1,97 @@
 {% extends "learning_logs/base.html" %}
 {% load static %}
+{% block style%}
+  <style>
+    body{
+      background: linear-gradient(#696969,#c0c0c0); 
+      /*最好设置一个背景颜色，万一渐变效果加载失败，背景也不会是空白的*/
+      background-color: #93B874; 
+    }
+  </style>
+{% endblock%}
 {% block header %}
-
 <div class="row clearfix">
   <div class="col-md-6 column">
     <div class="jumbotron">
-      <h1>
-        Hello, world!
-      </h1>
-      <p>
-        This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+      <h2>
+        代码改变世界!
+      </h2>
+      <p >
+        欢迎来到Leon的个人博客，本人目前大二本科在读。博客目前还处于开发测试阶段。
+        网站的代码发布在我的GitHub上欢迎star。也可以联系qq:740876073，欢迎交流！
       </p>
       <p>
-         <a class="btn btn-primary btn-large" href="#">Learn more</a>
+        <a class="btn btn-primary btn-large" href="#">关于我 »</a>
       </p>
     </div>
-
   </div>
+
   <div class="col-md-6 column">
     <nav class="navbar navbar-default" role="navigation">
       <div class="navbar-header">
-         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+            class="icon-bar"></span><span class="icon-bar"></span></button>
+        <a class="navbar-brand" href="https://github.com/31029?tab=repositories" target="_blank" >我的GitHub</a>
       </div>
-      
+
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active">
-             <a href="#">Link</a>
+          <li>
+            <a href="https://blog.csdn.net/qq_44683653" target="_blank">CSDN</a>
           </li>
           <li>
-             <a href="#">Link</a>
+            <a href="https://www.cnblogs.com/" target="_blank">博客园</a>
           </li>
           <li class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
             <ul class="dropdown-menu">
               <li>
-                 <a href="#">Action</a>
+                <a href="#">Action</a>
               </li>
               <li>
-                 <a href="#">Another action</a>
+                <a href="#">Another action</a>
               </li>
               <li>
-                 <a href="#">Something else here</a>
+                <a href="#">Something else here</a>
               </li>
               <li class="divider">
               </li>
               <li>
-                 <a href="#">Separated link</a>
+                <a href="#">Separated link</a>
               </li>
               <li class="divider">
               </li>
               <li>
-                 <a href="#">One more separated link</a>
+                <a href="#">One more separated link</a>
               </li>
             </ul>
           </li>
         </ul>
-        <form class="navbar-form navbar-left" role="search">
-          <div class="form-group">
-            <input type="text" class="form-control" />
-          </div> <button type="submit" class="btn btn-default">Submit</button>
+        <form class="navbar-form navbar-left" role="search" action="search" method="GET">
+          <div class="form-group" >
+            <input type="text" class="form-control" value="{{keyword}}" name="keyword" placeholder="文章关键字">
+          </div> <button type="submit" class="btn btn-default">🔍</button>
         </form>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-             <a href="#">Link</a>
-          </li>
-          <li class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
-            <ul class="dropdown-menu">
-              <li>
-                 <a href="#">Action</a>
-              </li>
-              <li>
-                 <a href="#">Another action</a>
-              </li>
-              <li>
-                 <a href="#">Something else here</a>
-              </li>
-              <li class="divider">
-              </li>
-              <li>
-                 <a href="#">Separated link</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
       </div>
-      
     </nav>
+
     <div class="list-group">
-       <a href="#" class="list-group-item active">Home</a>
+      <div class="list-group-item active" style="text-shadow: black 5px 3px 3px;">热门分类</div>
+
+      {% for top_entry in top_entries%}
       <div class="list-group-item">
-        List header
-      </div>
-      <div class="list-group-item">
-        <h4 class="list-group-item-heading">
-          List group item heading
-        </h4>
+        <h5 class="list-group-item-heading">
+          <a class="text-muted" href="{% url 'learning_logs:entry' top_entry.id%}">{{top_entry.text}}</a>
+        </h5>
         <p class="list-group-item-text">
-          ...
+          {{top_entry.description}}
         </p>
       </div>
-      <div class="list-group-item">
-         <span class="badge">14</span> Help
-      </div> <a class="list-group-item active"> <span class="badge">14</span> Help</a>
+      {% endfor %}
+
+      <div class="list-group-item active"> <span class="badge">{{numbers}}</span><a href="{% url 'learning_logs:entries'%}" style="color: aqua;">所有分类»»</a></div>
     </div>
   </div>
 </div>
@@ -111,6 +99,7 @@
 <div class="row clearfix">
   <div class="col-md-12 column">
     <div class="carousel slide" id="carousel-432118">
+
       <ol class="carousel-indicators">
         <li class="active" data-slide-to="0" data-target="#carousel-432118">
         </li>
@@ -119,86 +108,83 @@
         <li data-slide-to="2" data-target="#carousel-432118">
         </li>
       </ol>
+
       <div class="carousel-inner">
         <div class="item active">
-          <img alt="" src="{% static "indeximages/1.jpg" %}" />
+          <img alt="" src="{% static "indeximages/default.jpg" %}" />
           <div class="carousel-caption">
             <h4>
               First Thumbnail label
             </h4>
             <p>
-              Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+              metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
             </p>
           </div>
         </div>
+
         <div class="item">
-          <img alt="" src="{% static "indeximages/2.jpg" %}" />
+          <img alt="" src="{% static "indeximages/default1.jpg" %}" />
           <div class="carousel-caption">
             <h4>
               Second Thumbnail label
             </h4>
             <p>
-              Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+              metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
             </p>
           </div>
         </div>
+
         <div class="item">
-          <img alt="" src="{% static "indeximages/3.jpg" %}" />
+          <img alt="" src="{% static "indeximages/default2.jpg" %}" />
           <div class="carousel-caption">
             <h4>
               Third Thumbnail label
             </h4>
             <p>
-              Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+              Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget
+              metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
             </p>
           </div>
         </div>
-      </div> <a class="left carousel-control" href="#carousel-432118" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-432118" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
+      </div> <a class="left carousel-control" href="#carousel-432118" data-slide="prev"><span
+          class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#carousel-432118"
+        data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
   </div>
 </div>
-
+<h2 style="color: rgb(119, 34, 69);">近期文章：</h2>
 
 <div class="row clearfix">
+  {% for article in top_articles %}
   <div class="col-md-4 column">
-    <h2>
-      Top.1 Article
-    </h2>
+    <h4>
+      {{article.topic}}
+    </h4>
+    <h5>
+      {{article.text|slice:":30"}}...
+    </h5>
     <p>
-      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-      condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec
-      sed odio dui.
-    </p>
-    <p>
-      <a class="btn" href="#">View details »</a>
+      <a class="btn" href="{% url 'learning_logs:article' article.id %}">View details »</a>
     </p>
   </div>
-  <div class="col-md-4 column">
-    <h2>
-      Top.3 Article
-    </h2>
-    <p>
-      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-      condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec
-      sed odio dui.
-    </p>
-    <p>
-      <a class="btn" href="#">View details »</a>
-    </p>
-  </div>
-  <div class="col-md-4 column">
-    <h2>
-      Top.3 Article
-    </h2>
-    <p>
-      Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-      condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec
-      sed odio dui.
-    </p>
-    <p>
-      <a class="btn" href="#">View details »</a>
-    </p>
-  </div>
+  {%endfor%}
 </div>
 {% endblock %}
 
+{% block content %}
+{% if not user.is_authenticated %}
+<h4>
+  <a href=" {% url 'users:register' %}">加入我</a>
+</h4>
+{% endif %}
+<p class="text-success">
+  Whenever you learn something new about a topic, make an entry
+  summarizing what you've learned.
+</p>
+{% endblock %}
+
+  </body>
+</html>

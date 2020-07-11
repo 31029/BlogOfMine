@@ -39,11 +39,12 @@ def articles(request):
 
 
 def article(request, article_id):
-    """Show a single article, and its entry."""
+    """Show a single article, and its comments."""
     article = Article.objects.get(id=article_id)
+    comments = article.comment_info.all()
     entry= article.entry
 
-    context = {'article': article, 'entry': entry}
+    context = {'article': article, 'entry': entry, 'comments_a':comments}
     return render(request, 'learning_logs/article.html', context)
 
 
@@ -130,7 +131,7 @@ def edit_article(request, article_id):
         form = ArticleForm(instance=article, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('learning_logs:articles'))
+            return HttpResponseRedirect(reverse('learning_logs:article',args=article_id))
     
     context = {'entry': entry, 'article': article, 'form': form}
     return render(request, 'learning_logs/edit_article.html', context)

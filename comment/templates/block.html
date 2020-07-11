@@ -1,0 +1,50 @@
+<hr />
+{% if not user.is_authenticated %}
+若要评论请先登录。
+{% endif %}
+
+{% if user.is_authenticated %}
+<div class="comment">
+    <form class="form" action="{% url 'comment:comment_a'%}" method="POST">
+        {% csrf_token %}
+        <input name="target" type="hidden" value="{{target}}" />
+        {{comment_form}}
+        <input type="submit" value="发布评论" />
+    </form>
+    {% endif %}
+
+    <!--评论列表-->
+    <ul class="list-group">
+        {% for comment in comment_list %}
+        <li class="list-group-item">
+            <div style="background-color: aquamarine;">
+
+                <p>用户：{{comment.user_belong}} 发布时间：{{comment.created_time}}-----------------------
+             {% if not user.is_authenticated %}若要评论请先登录。{% endif %}
+                    {% if user.is_authenticated %} <a href="{% url 'comment:comment_c' comment.id%}">回复</a>{% endif %}</p>
+            </div>
+            
+            <div>
+                {{comment.content}}
+                {% for inner_comment in comment.get_inner_comments %}
+                <ul class="list-group">
+                <li class="list-group-item">
+               
+                <div>
+                    <p>{{inner_comment.user_belong}}&nbsp;&nbsp;回复&nbsp;{{comment.user_belong}}
+                        {% if user.is_authenticated %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{% url 'comment:comment_c' comment.id%}">回复</a>{% endif %}</p>
+                    <small>{{inner_comment.content}}</small>
+                </div>
+               
+                </li>
+                 </ul>
+                 {%endfor%}
+
+                </ul>
+            </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>

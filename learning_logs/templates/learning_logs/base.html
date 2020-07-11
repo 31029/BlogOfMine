@@ -1,70 +1,94 @@
 {% load bootstrap3 %}
+{% load static %}
 <!--导航栏设计-->
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Learning Log</title>
-    {% block style %}{% endblock %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" charset="utf-8"
+    src="{% static "js/L2Dwidget.0.min.js" %}"></script>
+  <script type="text/javascript" charset="utf-8"
+    src="{% static "js/L2Dwidget.min.js" %}"></script>
+  <script type="text/javascript">
+    L2Dwidget.init({
+      "display": {
+        "superSample": 2,
+        "width": 200,
+        "height": 400,
+        "position": "right",
+        "hOffset": 0,
+        "vOffset": 0
+      }
+    });
+  </script>
+  <style>
+    #live2dcanvas {
+      border: 0 !important;
+    }
+  </style>
 
-    <!-- Static navbar -->  
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-          
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed"
-              data-toggle="collapse" data-target="#navbar"
-              aria-expanded="false" aria-controls="navbar">
-          </button>
-          <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
-              😀</a>
-        </div>
-        
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'learning_logs:entries' %}" target="_blank">分类</a></li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <li><a href="{% url 'learning_logs:articles' %}" target="_blank">文章</a></li>
-          </ul>
-          {% ifequal 1 request.user.id %}
-          <ul class="nav navbar-nav">
-            <li><a href="http://127.0.0.1:8000/admin" target="_blank">网站管理</a></li>
-          </ul>
-          {% endifequal %}
+  <title>Learning Log</title>
+  {% block style %}{% endblock %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
 
-          <ul class="nav navbar-nav navbar-right">
-            {% if user.is_authenticated %}
-              <li><a>奥里给！ {{ user.username }}</a></li>
-              <li><a href="{% url 'users:logout' %}">登出</a></li>
-            {% else %}
-              <li><a href="{% url 'users:register' %}">注册</a></li>
-              <li><a href="{% url 'users:login' %}">登录</a></li>
-            {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
-        
-      </div>
-    </nav>
-    
+<body>
+
+  <!-- Static navbar -->
+  <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
 
-      <div class="page-header">
-        {% block header %}{% endblock %}
-      </div>
-      <div>
-        {% block content %}{% endblock %}
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar">
+        </button>
+        <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
+          😀主页</a>
       </div>
 
-    </div> <!-- /container -->
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'learning_logs:entries' %}" target="_blank">分类</a></li>
+        </ul>
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'learning_logs:articles' %}" target="_blank">文章</a></li>
+        </ul>
+        {% ifequal 1 request.user.id %}
+        <ul class="nav navbar-nav">
+          <li><a href="http://127.0.0.1:8000/admin" target="_blank">网站管理</a></li>
+        </ul>
+        {% endifequal %}
 
-  </body>
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+          <li><a>奥里给！ {{ user.username }}</a></li>
+          <li><a href="{% url 'users:logout' %}">登出</a></li>
+          {% else %}
+          <li><a href="{% url 'users:register' %}">注册</a></li>
+          <li><a href="{% url 'users:login' %}">登录</a></li>
+          {% endif %}
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="page-header">
+      {% block header %}{% endblock %}
+    </div>
+    <div>
+      {% block content %}{% endblock %}
+    </div>
+
+  </div> <!-- /container -->
+
+</body>
 </html>

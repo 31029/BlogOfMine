@@ -9,6 +9,8 @@
   <p><a href="{% url 'learning_logs:entry' entry.id %}">{{ entry }}</a></p>
 {% endfor %}
 
+<hr/>
+
 {% ifequal 1 user.id %}
   <p>Add a new entry:</p>
   <form action="{% url 'learning_logs:entries'%}" method='post'>

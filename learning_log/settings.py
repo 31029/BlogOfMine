@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
+    'mdeditor', # Markdown 编辑器
 
     #第三方应用程序
     'bootstrap3',
@@ -44,6 +46,8 @@ INSTALLED_APPS = [
     #我的应用
     'learning_logs',
     'users',
+    'comment',
+    
 ]
 
 MIDDLEWARE = [
@@ -136,6 +140,10 @@ BOOTSTRAP3 = {'include_jquery': True, }
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),  
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')  #uploads必须存在，且在项目目录下
+
+MEDIA_URL = '/media/'   #你上传的文件和图片会默认存在/uploads/editor下
 
 #HeroKu设置
 '''

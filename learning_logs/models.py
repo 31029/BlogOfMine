@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericRelation
+from ckeditor.fields import RichTextField
 
+import comment.models as cmodel
 
 class Tag(models.Model):
     """Some pecific details about the article"""
@@ -39,6 +42,7 @@ class Article(models.Model):
     entry = models.ForeignKey(to=Entry, on_delete=models.CASCADE)
     owner = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
+    comment_info = GenericRelation(cmodel.Comment, related_query_name='articles')
 
     class Meta:
         verbose_name = verbose_name_plural = "博文"

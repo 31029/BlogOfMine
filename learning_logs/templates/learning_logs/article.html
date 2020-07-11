@@ -1,11 +1,12 @@
 {% extends 'learning_logs/base.html' %}
+{% load comment_block %}
 
 {% block header %}
 <h4>{{ article.topic}}</h4>
 
-{% if request.user.is_authenticate %}
+{% ifequal 1 user.id%}
 <a href="{% url 'learning_logs:edit_entry' entry.id%}">修改分类名</a>
-{% endif %}
+{% endifequal %}
 {% endblock header %}
 
 {% block content %}
@@ -23,6 +24,9 @@
 {% ifequal 1 user.id%}
 <div style="text-align: right;">
 <a class="btn btn-primary btn-large" href="{% url 'learning_logs:edit_article' article.id %}" > 编辑文章</a></div>
-
 {% endifequal %}
+
+
+{% comment_block article.id request.user%}
+
 {% endblock content %}
